@@ -1,1 +1,228 @@
+import random
+import time
 
+inventory = []
+
+
+def random_option(message1, message2):
+    situation = [message1, message2]
+    random_option = random.choice(situation)
+    return random_option
+
+
+def Capture(occasion, option1, option2):
+    while True:
+        choice = input(occasion)
+        if choice == option1:
+            break
+        elif choice == option2:
+            break
+        else:
+            print("Invalid input! Please try again!")
+    return choice
+
+
+def print_speed(occasion):
+    print(occasion)
+    time.sleep(2)
+
+
+def print_speed1(occasion):
+    print(occasion)
+    time.sleep(1.5)
+
+
+def Grab_Rock():
+    print_speed1(f"The orc is stunned, but regains control. He begins "
+          "running towards you again.\nWill you:")
+    Q2 = random_option('Run', 'Hide in a nearby cave')
+    choice = Capture(f"A. Throw another rock\nB. {Q2}\n", "A", "B")
+    if choice == "A":
+        print_speed1("You decided to throw another rock, as if "
+              "the first rock thrown did much damage. The "
+              "rock flew well over the orcs head. You missed.")
+        print_speed1("Now you are dead!\n")
+        play_again()
+    if choice == "B":
+        if Q2 == 'Run':
+            Run()
+        elif Q2 == 'Hide in a nearby cave':
+            Cave()
+
+
+def Run():
+    print_speed1("You darted, but the "
+          "orc's speed is too great.\nWill you:")
+    Q3 = random_option('Hide behind a massive boulder', 'Trapped so you fight')
+    choice = Capture(f"A. {Q3}\nB. Sprint towards an abandoned "
+                     "village\n", "A", "B")
+    if choice == "A":
+        if Q3 == 'Hide behind a massive boulder':
+            print_speed1("You're easily spotted.")
+            if "sword" in inventory:
+                print_speed("As the orc moves to attack, "
+                      "you unleash your sword.")
+                print_speed("The Sword of Ogoroth shines brightly "
+                      "in your hand as you brace yourself "
+                      "for the attack. You pierced the blade "
+                      "into its chest\n")
+                print_speed1("You survived!\n")
+                play_again()
+            else:
+                print_speed1("You died!\n")
+                play_again()
+        elif Q3 == 'Trapped so you fight':
+            print_speed1("You are no match for an orc.\n")
+            if "sword" in inventory:
+                print_speed("As the orc moves to attack, "
+                      "you unleash your sword.")
+                print_speed("The Sword of Ogoroth shines brightly "
+                      "in your hand as you brace yourself "
+                      "for the attack. You pierced the blade "
+                      "into its chest\n")
+                print_speed1("You survived!\n")
+                play_again()
+            else:
+                print_speed1("You are dead!\n")
+                play_again()
+    elif choice == "B":
+        village()
+
+
+def Cave():
+    print_speed1("You were half-hearted, since the cave was dark and "
+          "ominous. But before you fully enter, you noticed "
+          "a shiny sword on the ground.")
+    choice = Capture("Do you pick up a sword. Y/N?\n", "Y", "N")
+    if choice == "Y":
+        inventory.append("sword")
+        print(inventory)
+    print_speed1("What to do next?")
+    choice = Capture("A. Hide in silence\n"
+                     "B. Fight\n", "A", "B")
+    if choice == "A":
+        print_speed("As the orc enters the dark cave, "
+              "you sliently sneak out. You're "
+              "several feet away, but the orc turns "
+              "around and sees you running.\n")
+        Run()
+    elif choice == "B":
+        if "sword" in inventory:
+            print_speed("You laid in wait. The shimmering Sword of Ogoroth "
+                  "attracted the orc, which thought you were no "
+                  "match.") 
+            print_speed("As he walked closer and closer, your heart "
+                  "beats rapidly.")
+            print_speed1("As the orc reached out to grab the "
+                  "sword, you pierced the blade into its chest.")
+            print_speed1("You survived!\n")
+            play_again()
+        else:
+            print_speed1("You should have picked up that sword "
+                  "You are defenceless.")
+            print_speed1("You died!\n")
+            play_again()
+
+
+def village():
+    print_speed("While frantically running, you notice a rusted sword "
+          "lying in the mud.")
+    print_speed1("You quickly reach down and grab it, "
+          "But Missed.")
+    print_speed("You try to calm your breathing as you hide "
+          "behind a crumbling structure, waiting for the orc to "
+          "come charging around the corner.") 
+    print_speed1("You notice a mesmerizing purple flower near your foot.")
+    choice = Capture("Do you pick it up? Y/N\n", "Y", "N")
+    if choice == "Y":
+        inventory.append("flower")
+        print_speed1("You hear its heavy footsteps and ready yourself for "
+              "the impending orc.")
+        if "sword" in inventory:
+            print_speed("As the orc moves to attack, "
+                  "you unleash your sword.")
+            print_speed1("The Sword of Ogoroth shines brightly "
+                  "in your hand as you brace yourself "
+                  "for the attack. You pierced the blade "
+                  "into its chest")
+            print_speed1("You survived!\n")
+            play_again()
+        elif "flower" in inventory:
+            print_speed("You quickly hold out the purple flower, somehow "
+                  "hoping it will stop the orc. It does! The orc "
+                  "was looking for love.")
+            print_speed1("This got weird but \nYou survived\n")
+            play_again()
+    elif choice == "N":
+        if "sword" in inventory:
+            print_speed("As the orc moves to attack, "
+                  "you unleash your sword.")
+            print_speed("The Sword of Ogoroth shines brightly "
+                  "in your hand as you brace yourself "
+                  "for the attack. You pierced the blade "
+                  "into its chest")
+            print_speed1("You survived!\n")
+            play_again()
+        else:
+            print_speed1("Maybe you should have picked up the flower.")
+            print_speed1("You are dead!\n")
+            play_again()
+
+
+def Intro():
+    print_speed("With the temperature soaring sky high "
+          "its time for you to take some time off and "
+          "bring yourself close to nature.")
+    print_speed("Beat the summertime blues by hiking to your favourite "
+          "destination and gazing at the twinkling stars in the "
+          "night sky.")
+    print_speed("So you step out of your mundane lives "
+          "and go camping underneath the stars!")
+    print_speed("Lying underneath the stars in an out "
+          "of the world experience.")
+    print_speed("When the clear night sky is lit up with "
+          "zillions of stars, all you can do is "
+          "marvel at the beauty of infinite cosmos.")
+    print_speed("After a beautiful sleep under the 1000 "
+          "suns, you awaken the next morning in a "
+          "thick, dank forest.")
+    print_speed("You stand and marvel at your new, unfamiliar setting.")
+    print_speed("The peace quickly fades when you hear a "
+          "grotesque sound emitting behind you. A slobbering "
+          "orc is running towards you.\nWill you:")
+
+
+def begins():
+    Q1 = random_option('Grab a nearby rock and throw it at the '
+                       'orc', 'Lie down and wait to be mauled')
+    choice = Capture(f"A. {Q1}\nB. Run\n", "A", "B")
+    if choice == "A":
+        if Q1 == 'Grab a nearby rock and throw it at the orc':
+            Grab_Rock()
+        elif Q1 == 'Lie down and wait to be mauled':
+            print_speed1("Welp, that was quick.\n "
+                  "You died!\n")
+            play_again()
+    elif choice == "B":
+        Run()
+
+
+def play_again():
+    play_again = Capture("Would you like to play again? Y/N\n", "Y", "N")
+    if play_again == "Y":
+        inventory == []
+        print("\nLoading...\n")
+        time.sleep(3)
+        play_game()
+    if play_again == "N":
+        print("Ok GoodBye!")
+
+
+def play_game():
+    Baddie = ['orc', 'zombie']
+    Emties = random.choice(Baddie)
+    Intro()
+    begins()
+
+
+play_game()
